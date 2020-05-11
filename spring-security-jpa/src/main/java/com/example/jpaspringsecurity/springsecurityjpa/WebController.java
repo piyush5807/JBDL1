@@ -1,10 +1,7 @@
 package com.example.jpaspringsecurity.springsecurityjpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class WebController {
@@ -27,14 +24,4 @@ public class WebController {
         return "Hello Admin";
     }
 
-    @PostMapping(value = "/signup")
-    public void signUp(@RequestBody SignUpRequest signUpRequest){
-        String roles = "";
-        for(int i=0;i<signUpRequest.getAuthorities().size() - 1; i++){
-            roles += signUpRequest.getAuthorities().get(i) + ":";
-        }
-
-        roles += signUpRequest.getAuthorities().get(signUpRequest.getAuthorities().size() - 1);
-        userServiceRepository.save(new MyUserDetails(signUpRequest.getName(), signUpRequest.getPassword(), true, roles));
-    }
 }

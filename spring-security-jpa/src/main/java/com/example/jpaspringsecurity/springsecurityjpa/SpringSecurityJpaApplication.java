@@ -22,5 +22,7 @@ public class SpringSecurityJpaApplication implements CommandLineRunner {
 				"USER:ADMIN"));
 		userServiceRepository.save(new MyUserDetails("abc", "1234", true,
 				"USER"));
+		userServiceRepository.save(new MyUserDetails("piyush", "hgvhg", true, "USER"));
+
 	}
 }
