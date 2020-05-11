@@ -5,10 +5,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -26,13 +23,13 @@ public class MyUserDetails implements UserDetails {
 
     boolean isEnabled;
 
-    String roles;
+    String authorities;
 
-    public MyUserDetails(String userName, String password, boolean isEnabled, String roles){
+    public MyUserDetails(String userName, String password, boolean isEnabled, String authorities){
         this.userName = userName;
         this.password = password;
         this.isEnabled = isEnabled;
-        this.roles = roles;
+        this.authorities = authorities;
     }
 
     public MyUserDetails(){
@@ -41,14 +38,13 @@ public class MyUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
-        String[]roles = this.getRoles().split(":");
-        for(int i=0;i<roles.length; i++){
-            GrantedAuthority obj = new SimpleGrantedAuthority(roles[i]);
+        String[]auth = this.authorities.split(":");
+        for(int i=0;i<auth.length; i++){
+            GrantedAuthority obj = new SimpleGrantedAuthority(auth[i]);
             authorities.add(obj);
         }
 
         System.out.println(authorities);
-
         return authorities;
     }
 
@@ -82,10 +78,6 @@ public class MyUserDetails implements UserDetails {
         return this.isEnabled;
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public void setUserName(String userName) {
         this.userName = userName;
     }
@@ -94,27 +86,7 @@ public class MyUserDetails implements UserDetails {
         this.password = password;
     }
 
-    public boolean isActive() {
-        return this.isEnabled;
-    }
-
-    public void setActive(boolean active) {
-        this.isEnabled = active;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getRoles() {
-        return roles;
-    }
-
-    public void setRoles(String roles) {
-        this.roles = roles;
+    public void setRoles(String authorities) {
+        this.authorities = authorities;
     }
 }
